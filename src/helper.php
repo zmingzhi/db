@@ -68,13 +68,13 @@ if ( ! function_exists( 'getDateTimeStamp' ) ) {
                     'end_time' =>strtotime(date('Y-m-d H:i:s', mktime(23,59,59,date('n')+(date('n')-1)%3,$getMonthDays,date('Y'))))
                 ];
                 break;
-            case 'lastyear':
-                $time = strtotime('-1 year', time());
-                $returnTime = [
-                    'start_time' =>strtotime(date('Y-m-d 00:00:00', mktime(0, 0,0, 1, 1, date('Y', time())))),
-                    'end_time' =>strtotime(date('Y-m-d 23:39:59', mktime(0, 0, 0, 12, 31, date('Y'))))
-                ];
-                break;
+						case 'lastyear':
+		            $time = strtotime('-1 year', time());
+		            $returnTime = [
+		                'start_time' =>strtotime(date('Y-m-d 00:00:00', mktime(0, 0,0, 1, 1, date('Y', $time)))),
+		                'end_time' =>strtotime(date('Y-m-d 23:39:59', mktime(0, 0, 0, 12, 31, date('Y',$time))))
+		            ];
+		            break;
             case 'thisyear':
                 $returnTime = [
                     'start_time' =>strtotime(date('Y-m-d 00:00:00', mktime(0, 0,0, 1, 1, date('Y', time())))),
