@@ -710,6 +710,19 @@ class Query implements \ArrayAccess, \Iterator {
 		return $this;
 	}
 
+	public function whereTime( $field, $params ) {
+		if ( empty( $params ) ) {
+			throw  new Exception( 'whereTime 参数错误' );
+		}
+		$paramArr = getDateTimeStamp($params);
+		$this->logic( 'AND' );
+		$this->build->bindExpression( 'where', " $field BETWEEN  ? AND ? " );
+		$this->build->bindParams( 'where', $paramArr['start_time'] );
+		$this->build->bindParams( 'where', $paramArr['end_time'] );
+
+		return $this;
+	}
+
 	/**
 	 * 多表内连接
 	 * @return $this
