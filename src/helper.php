@@ -2,7 +2,7 @@
 //表名加前缀
 if ( ! function_exists( 'tablename' ) ) {
 	function tablename( $table ) {
-		return c( 'database.prefix' ) . $table;
+		return \zongphp\config\Config::get( 'database.prefix' ) . $table;
 	}
 }
 
@@ -43,7 +43,7 @@ if ( ! function_exists( 'getDateTimeStamp' ) ) {
                     'end_time' =>strtotime(date("Y-m-d H:i:s",mktime(23,59,59,date("m"),date("d")-date("w")+7-7,date("Y"))))
                 ];
                 break;
-            case 'thisweek':
+            case 'week':
                 $returnTime = [
                     'start_time' =>strtotime(date("Y-m-d H:i:s",mktime(0, 0 , 0,date("m"),date("d")-date("w")+1,date("Y")))),
                     'end_time' =>strtotime(date("Y-m-d H:i:s",mktime(23,59,59,date("m"),date("d")-date("w")+7,date("Y"))))
@@ -55,13 +55,13 @@ if ( ! function_exists( 'getDateTimeStamp' ) ) {
                     'end_time' =>strtotime(date("Y-m-d H:i:s",mktime(23,59,59,date("m") ,0,date("Y"))))
                 ];
                 break;
-            case 'thismonth':
+            case 'month':
                 $returnTime = [
                     'start_time' =>strtotime(date("Y-m-d H:i:s",mktime(0, 0 , 0,date("m"),1,date("Y")))),
                     'end_time' =>strtotime(date("Y-m-d H:i:s",mktime(23,59,59,date("m"),date("t"),date("Y"))))
                 ];
                 break;
-            case 'thisquarter':
+            case 'quarter':
                 $getMonthDays = date("t",mktime(0, 0 , 0,date('n')+(date('n')-1)%3,1,date("Y")));
                 $returnTime = [
                     'start_time' =>strtotime(date('Y-m-d H:i:s', mktime(0, 0, 0,date('n')-(date('n')-1)%3,1,date('Y')))),
@@ -75,7 +75,7 @@ if ( ! function_exists( 'getDateTimeStamp' ) ) {
 		                'end_time' =>strtotime(date('Y-m-d 23:39:59', mktime(0, 0, 0, 12, 31, date('Y',$time))))
 		            ];
 		            break;
-            case 'thisyear':
+            case 'year':
                 $returnTime = [
                     'start_time' =>strtotime(date('Y-m-d 00:00:00', mktime(0, 0,0, 1, 1, date('Y', time())))),
                     'end_time' =>strtotime(date('Y-m-d 23:39:59', mktime(0, 0, 0, 12, 31, date('Y'))))

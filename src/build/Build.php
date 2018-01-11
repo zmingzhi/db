@@ -3,6 +3,7 @@ use zongphp\config\Config;
 
 /**
  * Class Build
+ * @package zongphp\db
  * SELECT %field% FROM %table% JOIN %join% WHERE %where% GROUP BY %group% HAVING %having% ORDER BY %order% LIMIT %limit%
  * INSERT INTO %table% (%field%) VALUES(%values%)
  * REPLACE INTO %table% (%field%) VALUES(%values%)
@@ -28,7 +29,6 @@ abstract class Build {
 	public function __construct( $query ) {
 		$this->query  = $query;
 	}
-
 
 	public function getBindExpression( $name ) {
 		return isset( $this->params[ $name ]['expression'] ) ? $this->params[ $name ]['expression'] : [ ];

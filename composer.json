@@ -1,18 +1,19 @@
 {
   "name": "zongphp/db",
-  "description": "数据操作",
-  "type": "project",
+  "description": "数据库管理组件",
   "keywords": [
+    "zongphp",
     "数据库管理"
   ],
   "license": "MIT",
   "minimum-stability": "stable",
   "require": {
-    "php": ">=5.4.0",
-    "zongphp/config": "~1.0",
-    "zongphp/page": "~1.0",
-    "zongphp/arr": "~1.0",
-    "zongphp/dir": "~1.0"
+    "php": ">=5.5.0",
+    "zongphp/config": "~2.0",
+    "zongphp/page": "~2.0",
+    "zongphp/arr": "~2.0",
+    "zongphp/dir": "~2.0",
+    "zongphp/request": "~2.0"
   },
   "autoload": {
     "files": [
