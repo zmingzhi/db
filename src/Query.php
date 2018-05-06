@@ -212,7 +212,7 @@ class Query implements \ArrayAccess, \Iterator {
 	 */
 	public function paginate( $row, $pageNum = 8 ) {
 		$obj = unserialize( serialize( $this ) );
-		Page::row( $row )->pageNum( $pageNum )->make( $obj->count() );
+		Page::row( $row )->pageNum( $pageNum )->make( intval($obj->count()) );
 		$res = $this->limit( Page::limit() )->get();
 		$this->data( $res ?: [] );
 
