@@ -24,6 +24,7 @@ trait Connection {
 	public function link( $type = true ) {
 		static $links = [];
 		$mulConfig    = Config::get( 'database.' . ( $type ? 'write' : 'read' ) );
+		$charsetType  = Config::get( 'database.charset' );
 		$this->config = $mulConfig[ array_rand( $mulConfig ) ];
 		$name         = serialize( $this->config );
 		if ( isset( $links[ $name ] ) ) {
@@ -32,7 +33,7 @@ trait Connection {
 		$dns            = $this->getDns();
 		$links[ $name ] = new PDO(
 			$dns, $this->config['user'], $this->config['password'],
-			[ PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'" ]
+			[ PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES '{$charsetType}'" ]
 		);
 		$links[ $name ]->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 		$this->execute( "SET sql_mode = ''" );
