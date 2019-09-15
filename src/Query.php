@@ -215,16 +215,39 @@ class Query implements \ArrayAccess, \Iterator {
 		Page::row( $row )->pageNum( $pageNum )->make( intval($obj->count()) );
 		$res = $this->limit( Page::limit() )->get();
 		$this->data( $res ?: [] );
-
+		
 		return $this;
 	}
 
+	/**
+	 * 获取数据总量
+	 * @return mixed
+	 */
+	public function getTotalRow(){
+		$obj = unserialize( serialize( $this ) );
+		return intval($obj->count());
+	}
 	/**
 	 * 前台显示页码样式
 	 * @return mixed
 	 */
 	public function links() {
 		return Page::show();
+	}
+	/**
+	 * 当前页
+	 * @return mixed
+	 */
+	public function getSelfPage(){
+		return Page::getSelfPage();
+	}
+	
+	/**
+	 * 获取总页数
+	 * @return mixed
+	 */
+	public function getTotalPage(){
+		return Page::getTotalPage();
 	}
 
 	/**

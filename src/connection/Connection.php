@@ -24,7 +24,7 @@ trait Connection {
 	public function link( $type = true ) {
 		static $links = [];
 		$mulConfig    = Config::get( 'database.' . ( $type ? 'write' : 'read' ) );
-		$charsetType  = Config::get( 'database.charset' );
+		$charsetType    = Config::get( 'database.charset' );
 		$this->config = $mulConfig[ array_rand( $mulConfig ) ];
 		$name         = serialize( $this->config );
 		if ( isset( $links[ $name ] ) ) {
