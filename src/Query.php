@@ -408,6 +408,25 @@ class Query implements \ArrayAccess, \Iterator {
 
 		return $this->execute( $this->build->$action(), $this->build->getInsertParams() );
 	}
+	
+	/**
+     * 批量插入记录
+     * @param $data
+	 *
+	 * @return bool
+	 * @throws \Exception
+     */
+	 public function insertAll(array $data = [] ){
+		if ( empty( $data ) ) {
+			throw new Exception( '没有数据用于插入' );
+		}
+		
+		foreach( $data as $vo ) {
+			$this->insert($vo);
+		}
+		
+		return true;
+	 }
 
 	/**
 	 * 替换数据适用于表中有唯一索引的字段
