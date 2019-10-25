@@ -640,16 +640,21 @@ class Query implements \ArrayAccess, \Iterator {
 				call_user_func_array( [ $this, 'where' ], $v );
 			}
 		} else {
+			if(strpos($args[0], '.')){
+				$field = $args[0];
+			}else{
+				$field = "`{$args[0]}`";
+			}
 			switch ( count( $args ) ) {
 				case 1:
-					$this->build->bindExpression( 'where',"`{$args[0]}`");
+					$this->build->bindExpression( 'where',"{$field}");
 					break;
 				case 2:
-					$this->build->bindExpression( 'where', "`{$args[0]}` = ?" );
+					$this->build->bindExpression( 'where', "{$field} = ?" );
 					$this->build->bindParams( 'where', $args[1] );
 					break;
 				case 3:
-					$this->build->bindExpression( 'where', "`{$args[0]}` {$args[1]} ?" );
+					$this->build->bindExpression( 'where', "{$field} {$args[1]} ?" );
 					$this->build->bindParams( 'where', $args[2] );
 					break;
 			}
@@ -684,15 +689,25 @@ class Query implements \ArrayAccess, \Iterator {
 	}
 
 	public function whereNull( $field ) {
+		if(strpos($field, '.')){
+			$field = $field;
+		}else{
+			$field = "`{$field}`";
+		}
 		$this->logic( 'AND' );
-		$this->build->bindExpression( 'where', "`$field` IS NULL" );
+		$this->build->bindExpression( 'where', "$field IS NULL" );
 
 		return $this;
 	}
 
 	public function whereNotNull( $field ) {
+		if(strpos($field, '.')){
+			$field = $field;
+		}else{
+			$field = "`{$field}`";
+		}
 		$this->logic( 'AND' );
-		$this->build->bindExpression( 'where', "`$field` IS NOT NULL" );
+		$this->build->bindExpression( 'where', "$field IS NOT NULL" );
 
 		return $this;
 	}
@@ -701,13 +716,18 @@ class Query implements \ArrayAccess, \Iterator {
 		if ( ! is_array( $params ) || empty( $params ) ) {
 			throw  new Exception( 'whereIn 参数错误' );
 		}
+		if(strpos($field, '.')){
+			$field = $field;
+		}else{
+			$field = "`{$field}`";
+		}
 		$this->logic( 'AND' );
 		$where = '';
 		foreach ( $params as $value ) {
 			$where .= '?,';
 			$this->build->bindParams( 'where', $value );
 		}
-		$this->build->bindExpression( 'where', " `$field` IN (" . substr( $where, 0, - 1 ) . ")" );
+		$this->build->bindExpression( 'where', " $field IN (" . substr( $where, 0, - 1 ) . ")" );
 
 		return $this;
 	}
@@ -716,13 +736,18 @@ class Query implements \ArrayAccess, \Iterator {
 		if ( ! is_array( $params ) || empty( $params ) ) {
 			throw  new Exception( 'whereIn 参数错误' );
 		}
+		if(strpos($field, '.')){
+			$field = $field;
+		}else{
+			$field = "`{$field}`";
+		}
 		$this->logic( 'AND' );
 		$where = '';
 		foreach ( $params as $value ) {
 			$where .= '?,';
 			$this->build->bindParams( 'where', $value );
 		}
-		$this->build->bindExpression( 'where', " `$field` NOT IN (" . substr( $where, 0, - 1 ) . ")" );
+		$this->build->bindExpression( 'where', " $field NOT IN (" . substr( $where, 0, - 1 ) . ")" );
 
 		return $this;
 	}
@@ -731,8 +756,13 @@ class Query implements \ArrayAccess, \Iterator {
 		if ( ! is_array( $params ) || empty( $params ) ) {
 			throw  new Exception( 'whereIn 参数错误' );
 		}
+		if(strpos($field, '.')){
+			$field = $field;
+		}else{
+			$field = "`{$field}`";
+		}
 		$this->logic( 'AND' );
-		$this->build->bindExpression( 'where', " `$field` BETWEEN  ? AND ? " );
+		$this->build->bindExpression( 'where', " $field BETWEEN  ? AND ? " );
 		$this->build->bindParams( 'where', $params[0] );
 		$this->build->bindParams( 'where', $params[1] );
 
@@ -743,8 +773,13 @@ class Query implements \ArrayAccess, \Iterator {
 		if ( ! is_array( $params ) || empty( $params ) ) {
 			throw  new Exception( 'whereIn 参数错误' );
 		}
+		if(strpos($field, '.')){
+			$field = $field;
+		}else{
+			$field = "`{$field}`";
+		}
 		$this->logic( 'AND' );
-		$this->build->bindExpression( 'where', " `$field` NOT BETWEEN  ? AND ? " );
+		$this->build->bindExpression( 'where', " $field NOT BETWEEN  ? AND ? " );
 		$this->build->bindParams( 'where', $params[0] );
 		$this->build->bindParams( 'where', $params[1] );
 
@@ -755,9 +790,14 @@ class Query implements \ArrayAccess, \Iterator {
 		if ( empty( $params ) ) {
 			throw  new Exception( 'whereTime 参数错误' );
 		}
+		if(strpos($field, '.')){
+			$field = $field;
+		}else{
+			$field = "`{$field}`";
+		}
 		$paramArr = getDateTimeStamp($params);
 		$this->logic( 'AND' );
-		$this->build->bindExpression( 'where', " `$field` BETWEEN  ? AND ? " );
+		$this->build->bindExpression( 'where', " $field BETWEEN  ? AND ? " );
 		$this->build->bindParams( 'where', $paramArr['start_time'] );
 		$this->build->bindParams( 'where', $paramArr['end_time'] );
 
